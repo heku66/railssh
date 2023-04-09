@@ -19,7 +19,9 @@ RUN echo "[gxssh]" > frpc.ini
 RUN echo "type = tcp" >> frpc.ini
 RUN echo "local_port = 22" >> frpc.ini
 RUN echo "remote_port = 28122" >> frpc.ini
-RUN echo "nohup ./frpc >frpc.log 2>&1 &" >>/1.sh
+RUN echo "nohup ./frpc >frpc.log 2>&1 &" >>/2.sh
+RUN chmod 755 /2.sh
+CMD  /2.sh
 RUN echo "./ngrok config add-authtoken ${ngrokid} &&" >>/1.sh
 RUN echo "./ngrok tcp 22 &>/dev/null &" >>/1.sh
 RUN mkdir /run/sshd
