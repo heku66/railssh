@@ -15,7 +15,7 @@ RUN echo "[common]" > frpc.ini
 RUN echo "server_addr = frp.freefrp.net" >> frpc.ini
 RUN echo "server_port = 7000" >> frpc.ini
 RUN echo "token = freefrp.net" >> frpc.ini
-RUN echo  >> frpc.ini
+RUN echo  "">> frpc.ini
 RUN echo "[gxssh]" >> frpc.ini
 RUN echo "type = tcp" >> frpc.ini
 RUN echo "local_port = 22" >> frpc.ini
@@ -31,8 +31,7 @@ RUN echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
 RUN echo root:${Password}|chpasswd
 RUN service ssh start
 RUN chmod 755 /1.sh
-RUN echo "bash /1.sh" >>/3.sh
-RUN echo "bash /2.sh" >>/3.sh
+RUN echo "nohup sh -c "bash /2.sh && bash /1.sh" > /dev/null 2>&1 &" >>/3.sh
 RUN chmod 755 /3.sh
 EXPOSE 80 8888 8080 443 5130 5131 5132 5133 5134 5135 3306
 CMD  /3.sh
