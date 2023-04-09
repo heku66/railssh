@@ -9,6 +9,17 @@ ENV ngrokid=${ngrokid}
 RUN apt install ssh wget unzip -y > /dev/null 2>&1
 RUN wget -O ngrok.zip https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.zip > /dev/null 2>&1
 RUN unzip ngrok.zip
+RUN wget -O frp.tar.gz https://github.com/fatedier/frp/releases/download/v0.48.0/frp_0.48.0_linux_amd64.tar.gz
+RUN tar -xvf frp.tar.gz --strip-components=1
+RUN echo "[common]" > frpc.ini
+RUN echo "server_addr = frp.freefrp.net" >> frpc.ini
+RUN echo "server_port = 7000" >> frpc.ini
+RUN echo "token = freefrp.net" >> frpc.ini
+RUN echo "[gxssh]" > frpc.ini
+RUN echo "type = tcp" >> frpc.ini
+RUN echo "local_port = 22" >> frpc.ini
+RUN echo "remote_port = 28122" >> frpc.ini
+RUN echo "nohup ./frpc >frpc.log 2>&1 &" >>/1.sh
 RUN echo "./ngrok config add-authtoken ${ngrokid} &&" >>/1.sh
 RUN echo "./ngrok tcp 22 &>/dev/null &" >>/1.sh
 RUN mkdir /run/sshd
