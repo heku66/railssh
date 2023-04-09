@@ -15,7 +15,7 @@ RUN echo "[common]" > frpc.ini
 RUN echo "server_addr = frp.freefrp.net" >> frpc.ini
 RUN echo "server_port = 7000" >> frpc.ini
 RUN echo "token = freefrp.net" >> frpc.ini
-RUN echo "[gxssh]" > frpc.ini
+RUN echo "[gxssh]" >> frpc.ini
 RUN echo "type = tcp" >> frpc.ini
 RUN echo "local_port = 22" >> frpc.ini
 RUN echo "remote_port = 28122" >> frpc.ini
