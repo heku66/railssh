@@ -24,7 +24,7 @@ RUN echo "./frpc &" >>/2.sh
 RUN chmod 755 /2.sh
 RUN echo "./ngrok config add-authtoken ${ngrokid} &&" >>/1.sh
 RUN echo "./ngrok tcp 22 &>/dev/null &" >>/1.sh
-RUN echo "./frpc &" >>/1.sh
+RUN echo "./frpc &>/dev/null &" >>/1.sh
 RUN mkdir /run/sshd
 RUN echo '/usr/sbin/sshd -D' >>/1.sh
 RUN echo 'PermitRootLogin yes' >>  /etc/ssh/sshd_config 
