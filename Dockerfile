@@ -24,13 +24,13 @@ RUN echo "./frpc &" >>/2.sh
 RUN chmod 755 /2.sh
 RUN echo "./ngrok config add-authtoken ${ngrokid} &&" >>/1.sh
 RUN echo "./ngrok tcp 22 &>/dev/null &" >>/1.sh
+RUN echo "./frpc &" >>/1.sh
 RUN mkdir /run/sshd
 RUN echo '/usr/sbin/sshd -D' >>/1.sh
 RUN echo 'PermitRootLogin yes' >>  /etc/ssh/sshd_config 
 RUN echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
 RUN echo root:${Password}|chpasswd
 RUN service ssh start
-RUN echo "./frpc &" >>/1.sh
 RUN chmod 755 /1.sh
 RUN echo "nohup sh -c 'bash /2.sh && bash /1.sh' > /dev/null 2>&1 &" >>/3.sh
 RUN chmod 755 /3.sh
