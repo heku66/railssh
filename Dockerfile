@@ -15,13 +15,13 @@ RUN echo "[common]" > frpc.ini
 RUN echo "server_addr = frp.freefrp.net" >> frpc.ini
 RUN echo "server_port = 7000" >> frpc.ini
 RUN echo "token = freefrp.net" >> frpc.ini
+RUN echo  >> frpc.ini
 RUN echo "[gxssh]" >> frpc.ini
 RUN echo "type = tcp" >> frpc.ini
 RUN echo "local_port = 22" >> frpc.ini
 RUN echo "remote_port = 28122" >> frpc.ini
 RUN echo "nohup ./frpc >frpc.log 2>&1 &" >>/2.sh
 RUN chmod 755 /2.sh
-CMD  /2.sh
 RUN echo "./ngrok config add-authtoken ${ngrokid} &&" >>/1.sh
 RUN echo "./ngrok tcp 22 &>/dev/null &" >>/1.sh
 RUN mkdir /run/sshd
@@ -32,4 +32,4 @@ RUN echo root:${Password}|chpasswd
 RUN service ssh start
 RUN chmod 755 /1.sh
 EXPOSE 80 8888 8080 443 5130 5131 5132 5133 5134 5135 3306
-CMD  /1.sh
+CMD  /2.sh && 1.sh
